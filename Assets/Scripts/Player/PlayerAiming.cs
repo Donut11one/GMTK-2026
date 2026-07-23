@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerAiming : MonoBehaviour
 {
-    [SerializeField]  private Transform aimPosition;
+    [SerializeField] private Transform aimPosition;
     [SerializeField] private InputReader inputReader;
     [SerializeField] private Camera playerCamera;
 

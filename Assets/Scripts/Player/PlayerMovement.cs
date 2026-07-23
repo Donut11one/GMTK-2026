@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
     [Header("References")]
@@ -38,6 +37,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        body.MovePosition(body.position + _moveInput * moveSpeed * Time.fixedDeltaTime);
+        body.MovePosition(body.position + _moveInput * (moveSpeed * Time.fixedDeltaTime));
     }
 }
