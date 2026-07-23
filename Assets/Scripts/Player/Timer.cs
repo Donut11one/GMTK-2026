@@ -9,7 +9,7 @@ public class Timer : MonoBehaviour
     [SerializeField] private float remainingTime;
     
     public event Action TimerExpired;
-    public event Action<float> TimerTick; 
+    public event Action<float> TimerTick;
     private Coroutine _timerCoroutine;
     
     private void Awake()
@@ -24,7 +24,12 @@ public class Timer : MonoBehaviour
         _timerCoroutine = StartCoroutine(TickTimer());
     }
 
-    public IEnumerator PauseTimer(float pauseTime)
+    /// <summary>
+    /// Use this function to pause the timer for a specific amount of time,
+    /// such as invincibility frames.
+    /// </summary>
+    /// <param name="pauseSeconds">The amount of time to pause the timer for.</param>
+    public IEnumerator PauseTimer(float pauseSeconds)
     {
         float remainingPauseTime = remainingTime;
         StopTimer();

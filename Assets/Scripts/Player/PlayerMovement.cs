@@ -23,9 +23,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnMove(Vector2 movementInput)
     {
-        float moveY = movementInput.y;
-        float moveX = movementInput.x;
-        Vector2 moveDirection =  new Vector2(moveX, moveY).normalized;
+        Vector2 moveDirection =  new Vector2(
+            movementInput.x,
+            movementInput.y
+        ).normalized;
         transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
     }
 }
