@@ -13,6 +13,7 @@ public class InputReader : ScriptableObject, IPlayerActions
 
     private Controls _controls;
 
+    // BL: had to ensure play mode was set to reload domain and scene to ensure this loads properly
     private void OnEnable()
     {
         if (_controls == null)

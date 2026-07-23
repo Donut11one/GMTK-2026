@@ -6,13 +6,22 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private InputReader inputReader;
-    [SerializeField] private Transform playerTransform;
+    // BL: gave the player a rigidbody instead of transform so it collides properly
+    [SerializeField] private Rigidbody2D body;
 
     [Header("Settings")] 
-    [SerializeField] private float moveSpeed;
+    [SerializeField] private float moveSpeed = 5f;
+
+    // BL: MoveEvent fires when input changes, so cache it and apply continuously 
+    // applying in the handler made the player move one frame and then stop
+    private Vector2 _moveInput;
 
     private void Awake()
     {
+        if (body == null)
+        {
+            body = GetComponent<Rigidbody2D>();
+        }
         inputReader.MoveEvent += OnMove;
     }
 
@@ -23,10 +32,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnMove(Vector2 movementInput)
     {
-        Vector2 moveDirection =  new Vector2(
-            movementInput.x,
-            movementInput.y
-        ).normalized;
-        transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
+        Debug.Log($"Move: {movementInput}");
+        _moveInput = movementInput.normalized;
+    }
+
+    private void FixedUpdate()
+    {
+        body.MovePosition(body.position + _moveInput * moveSpeed * Time.fixedDeltaTime);
     }
 }
