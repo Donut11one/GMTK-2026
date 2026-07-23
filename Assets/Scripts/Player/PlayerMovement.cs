@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnMove(Vector2 movementInput)
     {
-        Debug.Log($"Move: {movementInput}");
+        // Debug.Log($"Move: {movementInput}");
         _moveInput = movementInput.normalized;
     }
 
