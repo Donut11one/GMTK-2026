@@ -6,7 +6,7 @@ using UnityEngine;
 public class Timer : MonoBehaviour
 {
     [SerializeField] private float startTime = 120f;
-    [SerializeField] private float currentTime;
+    [SerializeField] private float remainingTime;
     
     public event Action TimerExpired;
     public event Action<float> TimerTick; 
@@ -16,7 +16,7 @@ public class Timer : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         TimerExpired += OnTimerExpired;
-        currentTime = startTime;
+        remainingTime = startTime;
     }
 
     public void StartTimer()
@@ -24,7 +24,19 @@ public class Timer : MonoBehaviour
         _timerCoroutine = StartCoroutine(TickTimer());
     }
 
-    public void PauseTimer()
+    public IEnumerator PauseTimer(float pauseTime)
+    {
+        float remainingPauseTime = remainingTime;
+        StopTimer();
+        while (remainingPauseTime > 0f)
+        {
+            remainingPauseTime -= Time.deltaTime;
+            yield return null;
+        }
+        StartTimer();
+    }
+    
+    public void StopTimer()
     {
         if (_timerCoroutine != null)
         {
@@ -32,19 +44,19 @@ public class Timer : MonoBehaviour
         }
     }
 
-    public void AddTime(float toAdd) =>  currentTime += toAdd;
+    public void AddTime(float toAdd) =>  remainingTime += toAdd;
 
     public float GetTime()
     {
-        return currentTime;
+        return remainingTime;
     }
 
     private IEnumerator TickTimer()
     {
-        while (currentTime <= 0f)
+        while (remainingTime <= 0f)
         {
-            currentTime -= Time.deltaTime;
-            TimerTick?.Invoke(currentTime);
+            remainingTime -= Time.deltaTime;
+            TimerTick?.Invoke(remainingTime);
             yield return null;
         }
         
