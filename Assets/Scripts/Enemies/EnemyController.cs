@@ -1,0 +1,34 @@
+using UnityEngine;
+
+public class EnemyController : MonoBehaviour
+{
+    [SerializeField] private EnemyDataSO enemyData;
+    private Transform playerTransform;
+
+    private void Start()
+    {
+        // Find the player in the scene by tag
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            playerTransform = player.transform;
+        }
+    }
+
+    private void Update()
+    {
+        // Run the AI behavior every single frame
+        if (enemyData != null && enemyData.aiBehavior != null)
+        {
+            enemyData.aiBehavior.ProcessAI(this, playerTransform);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (enemyData != null)
+        {
+            enemyData.OnHitTarget(collision.gameObject);
+        }
+    }
+}
