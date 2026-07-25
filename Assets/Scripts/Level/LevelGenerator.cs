@@ -133,6 +133,12 @@ public static LevelData Generate(LevelGenerationSettings settings, System.Random
             
         var deadEnds = DeadEnds(level);
 
+        if (deadEnds.Count == 0)
+        {
+            level.Exit = level.Entrance;
+            return deadEnds;
+        }
+
         level.Exit = deadEnds[0];
         level.Rooms[level.Exit].Type = RoomType.Exit;
         
