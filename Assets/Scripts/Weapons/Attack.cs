@@ -7,7 +7,7 @@ using UnityEngine;
 public abstract class Attack: MonoBehaviour
 {
     [SerializeField] private float cooldownSeconds;
-    [SerializeField] private float damage;
+    [SerializeField] public float damage;
     [SerializeField] private float cost;
 
     protected Timer CooldownTimer;

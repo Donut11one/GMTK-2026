@@ -135,6 +135,18 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5107650479092177630, guid: 8f933285e0e29e64696307fc26d1f7e0, type: 3}
+      propertyPath: damage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5107650479092177630, guid: 8f933285e0e29e64696307fc26d1f7e0, type: 3}
+      propertyPath: projectile
+      value: 
+      objectReference: {fileID: 5703050656509244246, guid: 84ac8891d62def14f90312d3ce431a0d, type: 3}
+    - target: {fileID: 5107650479092177630, guid: 8f933285e0e29e64696307fc26d1f7e0, type: 3}
+      propertyPath: cooldownSeconds
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 6047764872082912912, guid: 8f933285e0e29e64696307fc26d1f7e0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.43481
