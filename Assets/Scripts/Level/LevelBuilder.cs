@@ -10,8 +10,7 @@ public class LevelBuilder : MonoBehaviour
     [SerializeField] private Room roomPrefab;
     [SerializeField] private Transform player;
 
-    [Header("Layout")]
-    [SerializeField] private float roomSize = 10f;
+    private float _roomSize = 10f;
 
     private void Start()
     {
@@ -37,7 +36,7 @@ public class LevelBuilder : MonoBehaviour
                 }
             }
 
-            room.Build(openSides, roomSize);
+            room.Build(openSides, _roomSize);
             room.SetType(cell.Type);
         }
 
@@ -46,6 +45,6 @@ public class LevelBuilder : MonoBehaviour
 
     private Vector3 ToWorld(Vector2Int coord)
     {
-        return new Vector3(coord.x * roomSize, coord.y * roomSize, 0f);
+        return new Vector3(coord.x * _roomSize, coord.y * _roomSize, 0f);
     }
 }
