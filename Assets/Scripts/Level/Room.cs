@@ -13,7 +13,13 @@ public class Room : MonoBehaviour
     [SerializeField] private Color entranceColor = Color.green;
     [SerializeField] private Color exitColor = Color.red;
 
+    [Header("Enemies")]
+    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private float spawnRange = 4f;
+
     private readonly List<Door> _doors = new();
+    private int _enemyCount;
+    private bool _explored;
 
     public void Build(ICollection<Vector2Int> openSides, float roomSize)
     {
@@ -32,6 +38,36 @@ public class Room : MonoBehaviour
             {
                 RegisterDoor(piece);
             }
+        }
+    }
+
+    public void SetEnemyCount(int count)
+    {
+        _enemyCount = count;
+    }
+
+    public void Enter()
+    {
+        if (_explored)
+        {
+            return;
+        }
+
+        _explored = true;
+        SpawnEnemies();
+    }
+
+    private void SpawnEnemies()
+    {
+        for (int i = 0; i < _enemyCount; i++)
+        {
+            var offset = new Vector3(
+                Random.Range(-spawnRange, spawnRange),
+                Random.Range(-spawnRange, spawnRange),
+                0f
+            );
+
+            Instantiate(enemyPrefab, transform.position + offset, Quaternion.identity);
         }
     }
 

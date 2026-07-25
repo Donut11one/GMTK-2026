@@ -8,6 +8,7 @@ public class RoomCell
 {
     public Vector2Int Coord;
     public RoomType Type = RoomType.Normal;
+    public int EnemyCount;
 
     public RoomCell(Vector2Int coord)
     {

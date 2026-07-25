@@ -12,16 +12,12 @@ public class LevelBuilder : MonoBehaviour
 
     public const float ROOM_SIZE = 10f;
 
-    private void Start()
+    public Dictionary<Vector2Int, Room> Build()
     {
         var rng = new System.Random();
         var level = LevelGenerator.Generate(settings, rng);
+        var rooms = new Dictionary<Vector2Int, Room>();
 
-        Build(level);
-    }
-
-    private void Build(LevelData level)
-    {
         foreach (var cell in level.Rooms.Values)
         {
             var room = Instantiate(roomPrefab, ToWorld(cell.Coord), Quaternion.identity, transform);
@@ -38,13 +34,20 @@ public class LevelBuilder : MonoBehaviour
 
             room.Build(openSides, ROOM_SIZE);
             room.SetType(cell.Type);
+            room.SetEnemyCount(cell.EnemyCount);
+
+            rooms[cell.Coord] = room;
         }
 
         player.position = ToWorld(level.Entrance);
+
+        return rooms;
     }
 
     private Vector3 ToWorld(Vector2Int coord)
     {
         return new Vector3(coord.x * ROOM_SIZE, coord.y * ROOM_SIZE, 0f);
     }
+
+
 }

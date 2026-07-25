@@ -9,6 +9,7 @@ public struct LevelGenerationSettings
     public int gridHeight;
     public int targetRooms;
     public int minDeadEnds;
+    public int maxEnemies;
 }
 
 public static class LevelGenerator
@@ -22,7 +23,7 @@ public static LevelData Generate(LevelGenerationSettings settings, System.Random
     for (int i = 0; i < MaxAttempts; i++)
     {
         lastAttempt = BuildLayout(settings, rng);
-        var deadEnds = AssignTypes(lastAttempt);
+        var deadEnds = AssignTypes(lastAttempt, settings, rng);
 
         if (lastAttempt.Rooms.Count >= settings.targetRooms && 
             deadEnds.Count >= settings.minDeadEnds
@@ -117,7 +118,7 @@ public static LevelData Generate(LevelGenerationSettings settings, System.Random
         return rng.Next(2) == 0;                         
     }
 
-    private static List<Vector2Int> AssignTypes(LevelData level)
+    private static List<Vector2Int> AssignTypes(LevelData level, LevelGenerationSettings settings, System.Random rng)
     {
         foreach (var cell in level.Rooms.Values)
         {
@@ -141,6 +142,14 @@ public static LevelData Generate(LevelGenerationSettings settings, System.Random
 
         level.Exit = deadEnds[0];
         level.Rooms[level.Exit].Type = RoomType.Exit;
+
+        foreach (var cell in level.Rooms.Values)
+        {
+            if (cell.Type == RoomType.Normal)
+            {
+                cell.EnemyCount = rng.Next(0, settings.maxEnemies + 1);
+            }
+        }
         
         return deadEnds;
     }

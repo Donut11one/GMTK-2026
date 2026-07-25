@@ -1,16 +1,18 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class RoomManager : MonoBehaviour
 {
-    [SerializeField] Transform player;
-    [SerializeField] Transform camera;
+    [SerializeField] private Transform player;
+    [SerializeField] private Transform camera;
+    [SerializeField] private LevelBuilder levelBuilder;
 
+    private Dictionary<Vector2Int, Room> _rooms;
     private Vector2Int _currentRoom;
 
     private void Start()
     {
-        _currentRoom = RoomAt(player.position);
-        SnapCameraTo(_currentRoom);
+        _rooms = levelBuilder.Build();
     }
 
     private void Update()
@@ -19,8 +21,15 @@ public class RoomManager : MonoBehaviour
 
         if (room != _currentRoom)
         {
+            _currentRoom = room;
             SnapCameraTo(room);
+            EnterRoom(room);
         }
+    }
+
+    private void EnterRoom(Vector2Int coord)
+    {
+        _rooms[coord].Enter();
     }
 
     private Vector2Int RoomAt(Vector3 worldPosition)
