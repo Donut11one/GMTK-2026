@@ -18,8 +18,10 @@ public class Room : MonoBehaviour
     [SerializeField] private float spawnRange = 4f;
 
     private readonly List<Door> _doors = new();
+    private readonly List<GameObject> _enemies = new();
     private int _enemyCount;
     private bool _explored;
+    private bool _inCombat;
 
     public void Build(ICollection<Vector2Int> openSides, float roomSize)
     {
@@ -55,6 +57,12 @@ public class Room : MonoBehaviour
 
         _explored = true;
         SpawnEnemies();
+
+        if (_enemyCount > 0)
+        {
+            SetDoorsOpen(false);
+            _inCombat = true;
+        }
     }
 
     private void SpawnEnemies()
@@ -67,7 +75,24 @@ public class Room : MonoBehaviour
                 0f
             );
 
-            Instantiate(enemyPrefab, transform.position + offset, Quaternion.identity);
+            var enemy = Instantiate(enemyPrefab, transform.position + offset, Quaternion.identity);
+            _enemies.Add(enemy);
+        }
+    }
+
+    private void Update()
+    {
+        if (!_inCombat)
+        {
+            return;
+        }
+
+        _enemies.RemoveAll(enemy => enemy == null);
+
+        if (_enemies.Count == 0)
+        {
+            _inCombat = false;
+            SetDoorsOpen(true);
         }
     }
 
