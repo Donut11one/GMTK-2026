@@ -71,5 +71,8 @@ public class RoomManager : MonoBehaviour
         _currentRoom = room;
         SnapCameraTo(room);
         EnterRoom(room);
+
+        var type = _rooms[room].Type;
+        GameManager.Instance.SetPaused(type == RoomType.Entrance || type == RoomType.Shop);
     }
 }

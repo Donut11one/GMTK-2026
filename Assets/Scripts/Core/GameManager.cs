@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public float Remaining { get; private set; }
     public int Score { get; private set; }
     public int Floor { get; private set; } = 1;
+    public int DamageBonus { get; private set; }
 
     private bool _running;
 
@@ -43,9 +44,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SetPaused(bool paused)
+    {
+        _running = !paused;
+    }
+
+    public void AddDamage(int amount)
+    {
+        DamageBonus += amount;
+    }
+
     public void SpendTime(float seconds)
     {
-        if (!_running)
+        if (Remaining <= 0f)
         {
             return;
         }

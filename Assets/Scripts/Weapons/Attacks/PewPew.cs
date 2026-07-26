@@ -16,7 +16,7 @@ public class PewPew: Attack
         Vector2 direction = ((Vector2)mouse - (Vector2)firePoint.position).normalized;
 
         var bullet = Instantiate(projectile, firePoint.position, Quaternion.identity);
-        bullet.Launch(direction, damage);
+        bullet.Launch(direction, damage + GameManager.Instance.DamageBonus);
         Debug.Log("bullet fired");
 
         CooldownTimer.Start();

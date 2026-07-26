@@ -8,7 +8,7 @@ public class EnemyController : MonoBehaviour, IDamageable
 
     private void Start()
     {
-        _health = enemyData.maxHealth;
+        _health = enemyData.maxHealth + (GameManager.Instance.Floor - 1);
 
         // Find the player in the scene by tag
         GameObject player = GameObject.FindGameObjectWithTag("Player");

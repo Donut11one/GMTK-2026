@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDataSO
   enemyName: Goblin
   damageAmount: 5
+  maxHealth: 2
   aiBehavior: {fileID: 11400000, guid: cfa9c18f2fe27294a9fb9292d1b10d5b, type: 2}

@@ -143,6 +143,11 @@ public static LevelData Generate(LevelGenerationSettings settings, System.Random
         level.Exit = deadEnds[0];
         level.Rooms[level.Exit].Type = RoomType.Exit;
 
+        if (deadEnds.Count > 1)
+        {
+            level.Rooms[deadEnds[1]].Type = RoomType.Shop;
+        }
+
         foreach (var cell in level.Rooms.Values)
         {
             if (cell.Type == RoomType.Normal)

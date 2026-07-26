@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum RoomType { Normal, Entrance, Exit }
+public enum RoomType { Normal, Entrance, Exit, Shop }
 
 public class RoomCell
 {

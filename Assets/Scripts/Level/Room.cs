@@ -4,6 +4,8 @@ using System;
 
 public class Room : MonoBehaviour
 {
+    [SerializeField] private GameObject shopPad;
+
     [Header("Walls")]
     [SerializeField] private GameObject wallPrefab;
     [SerializeField] private GameObject dooredWallPrefab;
@@ -13,6 +15,7 @@ public class Room : MonoBehaviour
     [SerializeField] private Color normalColor = Color.grey;
     [SerializeField] private Color entranceColor = Color.green;
     [SerializeField] private Color exitColor = Color.red;
+    [SerializeField] private Color shopColor = Color.blue;
 
     [Header("Enemies")]
     [SerializeField] private GameObject enemyPrefab;
@@ -29,12 +32,14 @@ public class Room : MonoBehaviour
     };
 
     public event Action Cleared;
+    public RoomType Type { get; private set; }
+    
     private readonly List<Door> _doors = new();
     private readonly List<GameObject> _enemies = new();
     private int _enemyCount;
     private bool _explored;
     private bool _inCombat;
-    private RoomType _type;
+    
 
     public void Build(ICollection<Vector2Int> openSides, float roomSize)
     {
@@ -99,7 +104,7 @@ public class Room : MonoBehaviour
         {
             _inCombat = false;
 
-            if (_type == RoomType.Normal)
+            if (Type == RoomType.Normal)
             {
                 SetDoorsOpen(true);
             }
@@ -150,8 +155,9 @@ public class Room : MonoBehaviour
 
     public void SetType(RoomType type)
     {
-        _type = type;
+        Type = type;
         floor.color = ColorFor(type);
+        shopPad.SetActive(type == RoomType.Shop);
     }
 
     private Color ColorFor(RoomType type)
@@ -164,6 +170,11 @@ public class Room : MonoBehaviour
         if (type == RoomType.Exit)
         {
             return exitColor;
+        }
+
+        if (type == RoomType.Shop)
+        {
+            return shopColor;
         }
 
         return normalColor;
