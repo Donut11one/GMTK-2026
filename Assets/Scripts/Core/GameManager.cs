@@ -40,6 +40,11 @@ public class GameManager : MonoBehaviour
 
     public void SpendTime(float seconds)
     {
+        if (!_running)
+        {
+            return;
+        }
+        
         Remaining -= seconds;
         TimeChanged?.Invoke(Remaining);
 

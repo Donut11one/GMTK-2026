@@ -8,13 +8,13 @@ public class Weapon : MonoBehaviour
     [SerializeField] private Attack primaryAttack;
     [SerializeField] private Attack secondaryAttack;
 
-    private void Start()
+    private void OnEnable()
     {
         inputReader.PrimaryFireEvent += HandlePrimaryFire;
         inputReader.SecondaryFireEvent += HandleSecondaryFire;
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         inputReader.PrimaryFireEvent -= HandlePrimaryFire;
         inputReader.SecondaryFireEvent -= HandleSecondaryFire;
