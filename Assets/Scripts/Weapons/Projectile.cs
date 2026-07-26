@@ -5,6 +5,8 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] private float speed = 15f;
     [SerializeField] private float lifetime = 3f;
+    [SerializeField] private SpriteAnimator animator;
+    [SerializeField] private Sprite[] frames;
 
     private float _damage;
     
@@ -13,6 +15,7 @@ public class Projectile : MonoBehaviour
         _damage = damage;
         GetComponent<Rigidbody2D>().linearVelocity = direction.normalized * speed;
         Destroy(gameObject, lifetime);
+        animator.Play(frames);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
