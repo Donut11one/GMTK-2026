@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     public event Action<float> TimeChanged;
     public event Action GameOver;
+    public event Action DamageTaken;
     public float Remaining { get; private set; }
 
     private bool _running;
@@ -44,7 +45,7 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
-        
+
         Remaining -= seconds;
         TimeChanged?.Invoke(Remaining);
 
@@ -60,5 +61,11 @@ public class GameManager : MonoBehaviour
     {
         Remaining += seconds;
         TimeChanged?.Invoke(Remaining);
+    }
+
+    public void TimerDamage(float seconds)
+    {
+        DamageTaken?.Invoke();
+        SpendTime(seconds);
     }
 }

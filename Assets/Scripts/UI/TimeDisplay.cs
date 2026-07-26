@@ -4,10 +4,17 @@ using TMPro;
 public class TimeDisplay : MonoBehaviour
 {
     [SerializeField] private TMP_Text label;
+    [SerializeField] private Color damageColor = Color.red;
+    [SerializeField] private float flashDuration = 0.25f;
+
+    private Color _defaultColor;
+    private float _flashUntil;
 
     private void Start()
     {
+        _defaultColor = label.color;
         GameManager.Instance.TimeChanged += UpdateLabel;
+        GameManager.Instance.DamageTaken += Flash;
         UpdateLabel(GameManager.Instance.Remaining);
     }
 
@@ -16,6 +23,7 @@ public class TimeDisplay : MonoBehaviour
         if (GameManager.Instance != null)
         {
             GameManager.Instance.TimeChanged -= UpdateLabel;
+            GameManager.Instance.DamageTaken -= Flash;
         }
     }
 
@@ -25,5 +33,13 @@ public class TimeDisplay : MonoBehaviour
         int minutes = total / 60;
         int seconds = total % 60;
         label.text = $"{minutes}:{seconds:00}";
+        label.color = Time.time < _flashUntil 
+            ? damageColor
+            : _defaultColor;
+    }
+
+    private void Flash()
+    {
+        _flashUntil = Time.time + flashDuration;
     }
 }

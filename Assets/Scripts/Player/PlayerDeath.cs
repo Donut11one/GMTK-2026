@@ -43,6 +43,6 @@ public class PlayerDeath : MonoBehaviour, IDamageable
         }
 
         _nextHitTime = Time.time + iFrameTime;
-        GameManager.Instance.SpendTime(seconds);
+        GameManager.Instance.TimerDamage(seconds);
     }
 }
