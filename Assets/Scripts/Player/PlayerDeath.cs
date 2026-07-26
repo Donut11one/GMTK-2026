@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public class PlayerDeath : MonoBehaviour
+public class PlayerDeath : MonoBehaviour, IDamageable
 {
     [SerializeField] private SpriteAnimator spriteAnimator;
     [SerializeField] private PlayerAnimator playerAnimator;
     [SerializeField] private MonoBehaviour[] disableOnDeath;
     [SerializeField] private Sprite[] deathFrames;
+    [SerializeField] private float iFrameTime = 0.75f;
+
+    private float _nextHitTime;
 
     private void Start()
     {
@@ -30,5 +33,16 @@ public class PlayerDeath : MonoBehaviour
         }
 
         spriteAnimator.Play(deathFrames);
+    }
+
+    public void TakeDamage(float seconds)
+    {
+        if (Time.time < _nextHitTime)
+        {
+            return;
+        }
+
+        _nextHitTime = Time.time + iFrameTime;
+        GameManager.Instance.SpendTime(seconds);
     }
 }

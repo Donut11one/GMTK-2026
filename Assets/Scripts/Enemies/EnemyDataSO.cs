@@ -15,7 +15,6 @@ public class EnemyDataSO : ScriptableObject
         if (target.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
             damageable.TakeDamage(damageAmount);
-            Debug.Log(enemyName + " hit " + target.name + "!");
         }
     }
 }

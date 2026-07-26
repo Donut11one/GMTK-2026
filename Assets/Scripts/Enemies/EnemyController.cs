@@ -37,8 +37,13 @@ public class EnemyController : MonoBehaviour, IDamageable
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
+        if (!collision.gameObject.CompareTag("Player"))
+        {
+            return;
+        }
+
         if (enemyData != null)
         {
             enemyData.OnHitTarget(collision.gameObject);

@@ -147,7 +147,7 @@ public static LevelData Generate(LevelGenerationSettings settings, System.Random
         {
             if (cell.Type == RoomType.Normal)
             {
-                cell.EnemyCount = rng.Next(0, settings.maxEnemies + 1);
+                cell.EnemyCount = rng.Next(1, settings.maxEnemies + 1);
             }
         }
         

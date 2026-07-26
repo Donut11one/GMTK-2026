@@ -17,6 +17,16 @@ public class Room : MonoBehaviour
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private float spawnRange = 4f;
 
+    // BL: simplest way to prevent enemies from overlapping each other or player is spawn in corners
+    // only works while there are no obstacles in rooms and max enemies is 4. time crunch n all that
+    private static readonly Vector3[] SpawnCorners =
+    {
+        new Vector3(1f, 1f, 0f),
+        new Vector3(-1f, 1f, 0f),
+        new Vector3(-1f, -1f, 0f),
+        new Vector3(1f, -1f, 0f)
+    };
+
     private readonly List<Door> _doors = new();
     private readonly List<GameObject> _enemies = new();
     private int _enemyCount;
@@ -69,14 +79,7 @@ public class Room : MonoBehaviour
     {
         for (int i = 0; i < _enemyCount; i++)
         {
-            var offset = new Vector3(
-                Random.Range(-spawnRange, spawnRange),
-                Random.Range(-spawnRange, spawnRange),
-                0f
-            );
-
-            var enemy = Instantiate(enemyPrefab, transform.position + offset, Quaternion.identity);
-            _enemies.Add(enemy);
+            _enemies.Add(Instantiate(enemyPrefab, transform.position + SpawnCorners[i] * spawnRange, Quaternion.identity));
         }
     }
 
