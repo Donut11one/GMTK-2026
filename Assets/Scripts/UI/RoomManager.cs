@@ -12,7 +12,7 @@ public class RoomManager : MonoBehaviour
 
     private void Start()
     {
-        _rooms = levelBuilder.Build();
+        LoadFloor();
     }
 
     private void Update()
@@ -21,9 +21,7 @@ public class RoomManager : MonoBehaviour
 
         if (room != _currentRoom)
         {
-            _currentRoom = room;
-            SnapCameraTo(room);
-            EnterRoom(room);
+            GoTo(room);
         }
     }
 
@@ -47,5 +45,31 @@ public class RoomManager : MonoBehaviour
             room.y * LevelBuilder.ROOM_SIZE,
             camera.position.z
         );
+    }
+
+    private void LoadFloor()
+    {
+        _rooms = levelBuilder.Build();
+
+        foreach (var room in _rooms.Values)
+        {
+            room.Cleared += NextFloor;
+        }
+
+        GoTo(RoomAt(player.position));
+    }
+
+    private void NextFloor()
+    {
+        GameManager.Instance.NextFloor();
+        levelBuilder.Clear();
+        LoadFloor();
+    }
+
+    private void GoTo(Vector2Int room)
+    {
+        _currentRoom = room;
+        SnapCameraTo(room);
+        EnterRoom(room);
     }
 }

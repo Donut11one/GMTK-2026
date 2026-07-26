@@ -6,11 +6,15 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [SerializeField] private float startSeconds = 120f;
+    [SerializeField] private float killReward = 1f;
 
     public event Action<float> TimeChanged;
+    public event Action<int> ScoreChanged;
     public event Action GameOver;
     public event Action DamageTaken;
     public float Remaining { get; private set; }
+    public int Score { get; private set; }
+    public int Floor { get; private set; } = 1;
 
     private bool _running;
 
@@ -67,5 +71,17 @@ public class GameManager : MonoBehaviour
     {
         DamageTaken?.Invoke();
         SpendTime(seconds);
+    }
+
+    public void EnemyKilled()
+    {
+        Score += Floor;
+        ScoreChanged?.Invoke(Score);
+        AddTime(killReward);
+    }
+
+    public void NextFloor()
+    {
+        Floor++;
     }
 }

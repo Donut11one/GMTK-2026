@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class Room : MonoBehaviour
 {
@@ -27,11 +28,13 @@ public class Room : MonoBehaviour
         new Vector3(1f, -1f, 0f)
     };
 
+    public event Action Cleared;
     private readonly List<Door> _doors = new();
     private readonly List<GameObject> _enemies = new();
     private int _enemyCount;
     private bool _explored;
     private bool _inCombat;
+    private RoomType _type;
 
     public void Build(ICollection<Vector2Int> openSides, float roomSize)
     {
@@ -95,7 +98,16 @@ public class Room : MonoBehaviour
         if (_enemies.Count == 0)
         {
             _inCombat = false;
-            SetDoorsOpen(true);
+
+            if (_type == RoomType.Normal)
+            {
+                SetDoorsOpen(true);
+            }
+            else
+            {
+                Cleared?.Invoke();
+            }
+            
         }
     }
 
@@ -138,6 +150,7 @@ public class Room : MonoBehaviour
 
     public void SetType(RoomType type)
     {
+        _type = type;
         floor.color = ColorFor(type);
     }
 

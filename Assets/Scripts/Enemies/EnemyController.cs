@@ -24,6 +24,7 @@ public class EnemyController : MonoBehaviour, IDamageable
 
         if (_health <= 0)
         {
+            GameManager.Instance.EnemyKilled();
             Destroy(gameObject);
         }
     }

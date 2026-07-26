@@ -49,5 +49,14 @@ public class LevelBuilder : MonoBehaviour
         return new Vector3(coord.x * ROOM_SIZE, coord.y * ROOM_SIZE, 0f);
     }
 
+    public void Clear()
+    {
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            var room = transform.GetChild(i).gameObject;
 
+            room.SetActive(false);
+            Destroy(room);
+        }
+    }
 }

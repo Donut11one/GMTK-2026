@@ -149,6 +149,10 @@ public static LevelData Generate(LevelGenerationSettings settings, System.Random
             {
                 cell.EnemyCount = rng.Next(1, settings.maxEnemies + 1);
             }
+            else if (cell.Type == RoomType.Exit)
+            {
+                cell.EnemyCount = settings.maxEnemies;
+            }
         }
         
         return deadEnds;
