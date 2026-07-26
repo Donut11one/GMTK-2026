@@ -14,21 +14,38 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] private Sprite[] attackUp;
     [SerializeField] private Sprite[] attackSide;
 
+    [Header("Taking Damage")]
+    [SerializeField] private float damageDuration = 0.3f;
+    [SerializeField] private Sprite[] damageDown;
+    [SerializeField] private Sprite[] damageUp;
+    [SerializeField] private Sprite[] damageSide;
+
     [Header("References")]
     [SerializeField] private InputReader inputReader;
     [SerializeField] private SpriteAnimator animator;
     [SerializeField] private Camera camera;
 
     private float _attackTimer;
+    private float _damageTimer;
 
     private void Awake()
     {
         inputReader.PrimaryFireEvent += OnFire;
     }
 
+    private void Start()
+    {
+        GameManager.Instance.DamageTaken += OnDamaged;
+    }
+
     private void OnDestroy()
     {
         inputReader.PrimaryFireEvent -= OnFire;
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.DamageTaken -= OnDamaged;
+        }
     }
 
     private void OnFire(bool pressed)
@@ -39,6 +56,11 @@ public class PlayerAnimator : MonoBehaviour
         }
     }
 
+    private void OnDamaged()
+    {
+        _damageTimer = damageDuration;
+    }
+
     private void Update()
     {
         if (_attackTimer > 0f)
@@ -46,10 +68,12 @@ public class PlayerAnimator : MonoBehaviour
             _attackTimer -= Time.deltaTime;
         }
 
-        Vector2 aimDirection = AimDirection();
-        bool attacking = _attackTimer > 0f;
+        if (_damageTimer > 0f)
+        {
+            _damageTimer -= Time.deltaTime;
+        }
 
-        Sprite[] clip = SelectClip(aimDirection, attacking, out bool flipX);
+        Sprite[] clip = SelectClip(AimDirection(), out bool flipX);
 
         animator.Play(clip);
         animator.SetFlip(flipX);
@@ -61,7 +85,7 @@ public class PlayerAnimator : MonoBehaviour
         return (Vector2)mouse - (Vector2)transform.position;
     }
 
-    private Sprite[] SelectClip(Vector2 aim, bool attacking, out bool flipX)
+    private Sprite[] SelectClip(Vector2 aim, out bool flipX)
     {
         flipX = false;
 
@@ -69,20 +93,29 @@ public class PlayerAnimator : MonoBehaviour
         {
             // BL: aim right by default, flip when aiming left
             flipX = aim.x < 0f;
-            return attacking
-                ? attackSide
-                : moveSide;
+            return Pick(damageSide, attackSide, moveSide);
         }
 
         if (aim.y > 0f)
         {
-            return attacking
-                ? attackUp
-                : moveUp;
+            return Pick(damageUp, attackUp, moveUp);
         }
 
-        return attacking
-            ? attackDown
-            : moveDown;
+        return Pick(damageDown, attackDown, moveDown);
+    }
+
+    private Sprite[] Pick(Sprite[] damaged, Sprite[] attacking, Sprite[] moving)
+    {
+        if (_damageTimer > 0f)
+        {
+            return damaged;
+        }
+
+        if (_attackTimer > 0f)
+        {
+            return attacking;
+        }
+
+        return moving;
     }
 }

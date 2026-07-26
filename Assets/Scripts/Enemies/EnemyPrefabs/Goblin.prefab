@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 554932859420233120}
   - component: {fileID: 4907084324924542544}
   - component: {fileID: 5550739982477948630}
+  - component: {fileID: 8276790526904280430}
+  - component: {fileID: 6423198559133243175}
   m_Layer: 7
   m_Name: Goblin
   m_TagString: Untagged
@@ -84,8 +86,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.010130465, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 3427404812016300905, guid: 35660169ca9a3c649a8c7a7fb6ae3916, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.83137256}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -171,3 +173,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   enemyData: {fileID: 11400000, guid: 90fe60eaafd656544a20e23aebf0c0d2, type: 2}
+  animator: {fileID: 6423198559133243175}
+  deathDuration: 0.625
+--- !u!114 &8276790526904280430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4149060677482956477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d5bc0c9746209247bab94b9f7c030e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnimator
+  fps: 4
+--- !u!114 &6423198559133243175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4149060677482956477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6567bcf11e6ed5a43b52cbe2044355e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAnimator
+  animator: {fileID: 8276790526904280430}
+  idleFrames:
+  - {fileID: 3427404812016300905, guid: 35660169ca9a3c649a8c7a7fb6ae3916, type: 3}
+  - {fileID: -8848430102294784743, guid: 35660169ca9a3c649a8c7a7fb6ae3916, type: 3}
+  - {fileID: -4015776597154239163, guid: 35660169ca9a3c649a8c7a7fb6ae3916, type: 3}
+  - {fileID: -8203531977351199477, guid: 35660169ca9a3c649a8c7a7fb6ae3916, type: 3}
+  deathFrames:
+  - {fileID: 5219342863975106141, guid: 35660169ca9a3c649a8c7a7fb6ae3916, type: 3}
+  - {fileID: 7318224915890496150, guid: 35660169ca9a3c649a8c7a7fb6ae3916, type: 3}
+  - {fileID: -7020053109491910462, guid: 35660169ca9a3c649a8c7a7fb6ae3916, type: 3}
+  - {fileID: 1130219303496591926, guid: 35660169ca9a3c649a8c7a7fb6ae3916, type: 3}

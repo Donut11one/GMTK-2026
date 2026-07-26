@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private float startSeconds = 120f;
     [SerializeField] private float killReward = 1f;
+    [SerializeField] private float floorReward = 20f;
 
     public event Action<float> TimeChanged;
     public event Action<int> ScoreChanged;
@@ -94,5 +95,6 @@ public class GameManager : MonoBehaviour
     public void NextFloor()
     {
         Floor++;
+        AddTime(floorReward);
     }
 }

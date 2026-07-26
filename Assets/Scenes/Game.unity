@@ -1660,8 +1660,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b81dbad885f59cd4581482c452faa3f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  startSeconds: 60
+  startSeconds: 10
   killReward: 1
+  floorReward: 20
 --- !u!4 &1617798094
 Transform:
   m_ObjectHideFlags: 0
@@ -2002,7 +2003,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d5bc0c9746209247bab94b9f7c030e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteAnimator
-  fps: 8
+  fps: 4
 --- !u!114 &1925874593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2046,6 +2047,13 @@ MonoBehaviour:
   - {fileID: -4646429276533041581, guid: b051c5a67bab35d469fddd627afb82b4, type: 3}
   - {fileID: 5939718406403018866, guid: b051c5a67bab35d469fddd627afb82b4, type: 3}
   - {fileID: -3554766411955190234, guid: b051c5a67bab35d469fddd627afb82b4, type: 3}
+  damageDuration: 0.375
+  damageDown:
+  - {fileID: -4231457366037495469, guid: 9baf99e4c25ff0446a3b48c5b3214485, type: 3}
+  damageUp:
+  - {fileID: 5867489504120300046, guid: 9baf99e4c25ff0446a3b48c5b3214485, type: 3}
+  damageSide:
+  - {fileID: -7731959015521443118, guid: 9baf99e4c25ff0446a3b48c5b3214485, type: 3}
   inputReader: {fileID: 11400000, guid: 14e11c20a8215284fa6c5c95abc1b23c, type: 2}
   animator: {fileID: 1925874592}
   camera: {fileID: 519420031}
@@ -2066,7 +2074,25 @@ MonoBehaviour:
   disableOnDeath:
   - {fileID: 221071868}
   - {fileID: 1578113004}
-  deathFrames: []
+  deathFrames:
+  - {fileID: -8622529185882155163, guid: 80febd609349799439616973a67be2c2, type: 3}
+  - {fileID: 4824855993698368425, guid: 80febd609349799439616973a67be2c2, type: 3}
+  - {fileID: 6438229045332542772, guid: 80febd609349799439616973a67be2c2, type: 3}
+  - {fileID: -753037851676430927, guid: 80febd609349799439616973a67be2c2, type: 3}
+  - {fileID: 5629683113941269081, guid: 80febd609349799439616973a67be2c2, type: 3}
+  - {fileID: -1369655159154121558, guid: 80febd609349799439616973a67be2c2, type: 3}
+  - {fileID: -3449191943547133482, guid: 80febd609349799439616973a67be2c2, type: 3}
+  - {fileID: -3282478723498141057, guid: 80febd609349799439616973a67be2c2, type: 3}
+  - {fileID: -4502647584121962894, guid: 80febd609349799439616973a67be2c2, type: 3}
+  - {fileID: 3921341877297276677, guid: 80febd609349799439616973a67be2c2, type: 3}
+  - {fileID: 3767468184245595081, guid: 80febd609349799439616973a67be2c2, type: 3}
+  - {fileID: -6885141854884961737, guid: 80febd609349799439616973a67be2c2, type: 3}
+  - {fileID: 9056826552166626248, guid: 80febd609349799439616973a67be2c2, type: 3}
+  - {fileID: -7030541636631227967, guid: 80febd609349799439616973a67be2c2, type: 3}
+  - {fileID: -4052550226099989301, guid: 80febd609349799439616973a67be2c2, type: 3}
+  - {fileID: 1062620051963694489, guid: 80febd609349799439616973a67be2c2, type: 3}
+  - {fileID: 6653905750765057216, guid: 80febd609349799439616973a67be2c2, type: 3}
+  - {fileID: -2013945754413255396, guid: 80febd609349799439616973a67be2c2, type: 3}
   iFrameTime: 0.75
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

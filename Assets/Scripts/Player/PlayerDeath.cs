@@ -25,6 +25,8 @@ public class PlayerDeath : MonoBehaviour, IDamageable
 
     private void Die()
     {
+        GetComponent<Rigidbody2D>().simulated = false;
+        
         playerAnimator.enabled = false;
 
         foreach (var behavior in disableOnDeath)

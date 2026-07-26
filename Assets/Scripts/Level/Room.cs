@@ -10,12 +10,13 @@ public class Room : MonoBehaviour
     [SerializeField] private GameObject wallPrefab;
     [SerializeField] private GameObject dooredWallPrefab;
 
-    [Header("Room Colors")]
-    [SerializeField] private SpriteRenderer floor;
-    [SerializeField] private Color normalColor = Color.grey;
-    [SerializeField] private Color entranceColor = Color.green;
-    [SerializeField] private Color exitColor = Color.red;
-    [SerializeField] private Color shopColor = Color.blue;
+    [Header("Floor Tiles")]
+    [SerializeField] private float tileSize = 1f;
+    [SerializeField] private int tileSortingOrder = -10;
+    [SerializeField] private Sprite[] normalTiles;
+    [SerializeField] private Sprite[] entranceTiles;
+    [SerializeField] private Sprite[] exitTiles;
+    [SerializeField] private Sprite[] shopTiles;
 
     [Header("Enemies")]
     [SerializeField] private GameObject enemyPrefab;
@@ -33,16 +34,18 @@ public class Room : MonoBehaviour
 
     public event Action Cleared;
     public RoomType Type { get; private set; }
-    
+
     private readonly List<Door> _doors = new();
     private readonly List<GameObject> _enemies = new();
+    private float _roomSize;
     private int _enemyCount;
     private bool _explored;
     private bool _inCombat;
-    
 
     public void Build(ICollection<Vector2Int> openSides, float roomSize)
     {
+        _roomSize = roomSize;
+
         foreach (var direction in LevelData.Directions)
         {
             bool isDoorWay = openSides.Contains(direction);
@@ -156,27 +159,52 @@ public class Room : MonoBehaviour
     public void SetType(RoomType type)
     {
         Type = type;
-        floor.color = ColorFor(type);
+        BuildFloor(TilesFor(type));
         shopPad.SetActive(type == RoomType.Shop);
     }
 
-    private Color ColorFor(RoomType type)
+    private Sprite[] TilesFor(RoomType type)
     {
         if (type == RoomType.Entrance)
         {
-            return entranceColor;
+            return entranceTiles;
         }
 
         if (type == RoomType.Exit)
         {
-            return exitColor;
+            return exitTiles;
         }
 
         if (type == RoomType.Shop)
         {
-            return shopColor;
+            return shopTiles;
         }
 
-        return normalColor;
+        return normalTiles;
+    }
+
+    private void BuildFloor(Sprite[] tiles)
+    {
+        if (tiles == null || tiles.Length == 0)
+        {
+            return;
+        }
+
+        int count = Mathf.RoundToInt(_roomSize / tileSize);
+        float origin = (tileSize - _roomSize) / 2f;
+
+        for (int x = 0; x < count; x++)
+        {
+            for (int y = 0; y < count; y++)
+            {
+                var tile = new GameObject("Tile");
+                tile.transform.SetParent(transform, false);
+                tile.transform.localPosition = new Vector3(origin + x * tileSize, origin + y * tileSize, 0f);
+
+                var sprite = tile.AddComponent<SpriteRenderer>();
+                sprite.sprite = tiles[UnityEngine.Random.Range(0, tiles.Length)];
+                sprite.sortingOrder = tileSortingOrder;
+            }
+        }
     }
 }

@@ -3,8 +3,12 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour, IDamageable
 {
     [SerializeField] private EnemyDataSO enemyData;
+    [SerializeField] private EnemyAnimator animator;
+    [SerializeField] private float deathDuration = 0.625f;
+
     private Transform playerTransform;
     private float _health;
+    private bool _dead;
 
     private void Start()
     {
@@ -20,13 +24,30 @@ public class EnemyController : MonoBehaviour, IDamageable
 
     public void TakeDamage(float amount)
     {
+        if (_dead)
+        {
+            return;
+        }
+
         _health -= amount;
 
         if (_health <= 0)
         {
-            GameManager.Instance.EnemyKilled();
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    private void Die()
+    {
+        _dead = true;
+
+        GameManager.Instance.EnemyKilled();
+
+        GetComponent<Rigidbody2D>().simulated = false;
+        animator.PlayDeath();
+        enabled = false;
+
+        Destroy(gameObject, deathDuration);
     }
 
     private void Update()

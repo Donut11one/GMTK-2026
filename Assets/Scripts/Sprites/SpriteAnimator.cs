@@ -23,13 +23,18 @@ public class SpriteAnimator : MonoBehaviour
         }
 
         _frames = frames;
+        Restart();
+    }
+
+    public void Restart()
+    {
         _index = 0;
         _timer = 0f;
 
         if (_frames != null &&
             _frames.Length > 0
         ){
-            _renderer.sprite = frames[0];
+            _renderer.sprite = _frames[0];
         }
     }
 
